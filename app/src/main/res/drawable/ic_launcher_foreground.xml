@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- radar sweep beam -->
+    <path android:pathData="M54,54 L54,26 A28,28 0 0,1 79.17,40 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:type="linear"
+                android:startX="54"
+                android:startY="54"
+                android:endX="79.17"
+                android:endY="40">
+                <item android:color="#9934D399" android:offset="0.0" />
+                <item android:color="#0034D399" android:offset="1.0" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- radar rings -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#4DFFFFFF"
+        android:strokeWidth="2.2"
+        android:pathData="M82,54 A28,28 0 1,0 26,54 A28,28 0 1,0 82,54" />
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#66FFFFFF"
+        android:strokeWidth="2.2"
+        android:pathData="M70,54 A16,16 0 1,0 38,54 A16,16 0 1,0 70,54" />
+
+    <!-- center blip -->
+    <path
+        android:fillColor="#34D399"
+        android:pathData="M57,54 A3,3 0 1,0 51,54 A3,3 0 1,0 57,54" />
+
+    <!-- detected paper glyph at the sweep tip -->
+    <path
+        android:fillColor="#FFC857"
+        android:pathData="M72.5,33.5 h9 l3,3 v11 a1.4,1.4 0 0,1 -1.4,1.4 h-10.6 a1.4,1.4 0 0,1 -1.4,-1.4 v-12.6 a1.4,1.4 0 0,1 1.4,-1.4 z" />
+    <path
+        android:fillColor="#081722"
+        android:fillAlpha="0.35"
+        android:pathData="M81.5,33.5 l3,3 h-3 z" />
+</vector>

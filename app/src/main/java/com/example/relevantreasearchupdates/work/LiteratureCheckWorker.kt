@@ -49,10 +49,11 @@ class LiteratureCheckWorker(
     /** See [PaperRetention.insertFloor]; papers published before this are not stored. */
     private var insertFloor: String? = null
 
-    /** Inserts [paper] unless it's already stored or older than the retention floor. */
+    /** Inserts [paper] unless it's already stored, was dismissed by the user, or is older than the retention floor. */
     private suspend fun store(paper: Paper, inserted: MutableList<Paper>) {
         val floor = insertFloor
         if (floor != null && paper.publishedDate.isNotEmpty() && paper.publishedDate < floor) return
+        if (db.paperDao().isDismissed(paper.externalId)) return
         val rowId = db.paperDao().insertIgnoring(paper)
         if (rowId != -1L) inserted.add(paper.copy(id = rowId))
     }

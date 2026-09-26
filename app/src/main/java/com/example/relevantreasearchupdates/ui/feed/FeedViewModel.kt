@@ -46,11 +46,12 @@ class FeedViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     /** Manual escape hatch for a false-positive match string-matching can't catch, e.g. two real
-     * people who happen to share the exact full name being watched. */
+     * people who happen to share the exact full name being watched. Dismissed papers are never re-added. */
     fun deletePaper(id: Long) {
         viewModelScope.launch {
-            db.paperDao().getById(id)?.localPdfPath?.let { File(it).delete() }
-            db.paperDao().deleteById(id)
+            val paper = db.paperDao().getById(id) ?: return@launch
+            paper.localPdfPath?.let { File(it).delete() }
+            db.paperDao().dismiss(paper)
         }
     }
 }

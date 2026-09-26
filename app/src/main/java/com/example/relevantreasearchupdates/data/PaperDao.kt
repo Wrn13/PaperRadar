@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -32,6 +33,19 @@ interface PaperDao {
 
     @Query("DELETE FROM papers WHERE id = :id")
     suspend fun deleteById(id: Long)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertDismissed(dismissed: DismissedPaper)
+
+    @Query("SELECT EXISTS(SELECT 1 FROM dismissed_papers WHERE externalId = :externalId)")
+    suspend fun isDismissed(externalId: String): Boolean
+
+    /** Removes [paper] and remembers its externalId so future fetches never re-add it. */
+    @Transaction
+    suspend fun dismiss(paper: Paper) {
+        insertDismissed(DismissedPaper(paper.externalId))
+        deleteById(paper.id)
+    }
 
     @Query("DELETE FROM papers WHERE id IN (:ids)")
     suspend fun deleteByIds(ids: List<Long>)
